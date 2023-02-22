@@ -6,7 +6,7 @@ function App() {
   const [data, setData] = useState({});
   const [location, setLocation] = useState("");
 
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&lat={lat}&lon={lon}&appid=03928166b5c8b07cf2307025ac7c598c`;
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=imperial&lat={lat}&lon={lon}&appid=03928166b5c8b07cf2307025ac7c598c`;
 
   const searchLocation = (e) => {
     if (e.key === "Enter") {
@@ -14,9 +14,11 @@ function App() {
         setData(response.data);
         console.log(response.data);
       });
+      setLocation("");
     }
   };
 
+  const { name } = data;
   return (
     <div className="app">
       <div className="search">
@@ -25,35 +27,50 @@ function App() {
           value={location}
           onChange={(e) => setLocation(e.target.value)}
           onKeyPress={searchLocation}
+          onKeyUp={searchLocation}
           placeholder="Enter location"
         />
+        <button type="submit" onClick={searchLocation}>
+          search
+        </button>
       </div>
       <div className="container">
         <div className="top">
           <div className="location">
-            <p>Dallas</p>
+            <p>
+              {name}, {data.sys.country}
+            </p>
           </div>
           <div className="temp">
-            <h1> 60F</h1>
+            {data.main ? <h1>{data.main.temp.toFixed()}°F</h1> : null}
           </div>
         </div>
         <div className="description">
-          <p>Clouds</p>
+          {data.weather ? <p>{data.weather[0].main}</p> : null}
         </div>
-        <div className="bottom">
-          <div className="feels">
-            <p className="bold">63F</p>
-            <p>Feels Like</p>
+
+        {data.name != undefined && (
+          <div className="bottom">
+            <div className="feels">
+              {data.main ? (
+                <p className="bold">{data.main.feels_like.toFixed()}°F</p>
+              ) : null}
+              <p>Feels Like</p>
+            </div>
+            <div className="humidty">
+              {data.main ? <p className="bold">{data.main.humidity}%</p> : null}
+
+              <p>Humidity</p>
+            </div>
+            <div className="wind">
+              {data.main ? (
+                <p className="bold">{data.wind.speed.toFixed()} MPH</p>
+              ) : null}
+
+              <p>Wind Speed</p>
+            </div>
           </div>
-          <div className="humidty">
-            <p className="bold">20%</p>
-            <p>Humidity</p>
-          </div>
-          <div className="wind">
-            <p className="bold">12 MPH</p>
-            <p>Wind Speed</p>
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );
