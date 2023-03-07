@@ -1,12 +1,12 @@
 import { useState } from "react";
 import axios from "axios";
 function App() {
-  const API_KEY = process.env.OPEN_WEATHER_API_KEY;
+  const apiKey = process.env.REACT_APP_OPEN_WEATHER_API_KEY;
 
   const [data, setData] = useState({});
   const [location, setLocation] = useState("");
 
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=imperial&lat={lat}&lon={lon}&appid=${API_KEY}`;
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=imperial&lat={lat}&lon={lon}&appid=${apiKey}`;
 
   const searchLocation = (e) => {
     if (e.key === "Enter") {
@@ -37,9 +37,7 @@ function App() {
       <div className="container">
         <div className="top">
           <div className="location">
-            <p>
-              {name}, {data.sys.country}
-            </p>
+            <p>{name}</p>
           </div>
           <div className="temp">
             {data.main ? <h1>{data.main.temp.toFixed()}°F</h1> : null}
