@@ -2,7 +2,6 @@ import { useState } from "react";
 import axios from "axios";
 function App() {
   const apiKey = process.env.REACT_APP_OPEN_WEATHER_API_KEY;
-
   const [data, setData] = useState({});
   const [location, setLocation] = useState("");
   const [loading, setLoading] = useState(false);
