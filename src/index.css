@@ -94,3 +94,8 @@ button {
 .bold {
   font-weight: 700;
 }
+.loading,
+.error {
+  text-align: center;
+  text-transform: uppercase;
+}
