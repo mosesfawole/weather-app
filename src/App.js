@@ -13,6 +13,7 @@ function App() {
     try {
       setLoading(true);
       setError(null);
+      setLocation("");
       const response = await axios.get(url);
 
       setData(response.data);
